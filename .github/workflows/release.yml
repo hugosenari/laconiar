@@ -2,7 +2,7 @@ name: Git Release
 on:
   push:
     branches:
-      - release
+      - master
 jobs:
   Validate:
     runs-on: ubuntu-latest
@@ -39,4 +39,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: release
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master

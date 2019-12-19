@@ -3,7 +3,7 @@ name: Node.js Tests
 on:
   push:
     branches-ignore:
-    - 'release'
+    - 'master'
 
 jobs:
   Validate:
