@@ -57,7 +57,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
           cat ./.npmrc
-          npm run release -- patch --ci --no-git.push --no-git.requireUpstream
+          npm run release -- minor --ci --no-git.push --no-git.requireUpstream
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
