@@ -18,7 +18,7 @@ jobs:
       - name: Build and test
         run: npm start validate
 
-  Publish:
+  Release:
     needs: Validate
     runs-on: ubuntu-latest
     steps:
@@ -42,8 +42,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
 
-  Pack:
-    needs: Publish
+  Publish-GitHub:
+    needs: Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -56,3 +56,17 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  Publish-Npm:
+    needs: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
