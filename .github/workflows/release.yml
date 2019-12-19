@@ -18,7 +18,7 @@ jobs:
       - name: Build and test
         run: npm start validate
 
-  Release:
+  ReleaseGH:
     needs: Validate
     runs-on: ubuntu-latest
     steps:
@@ -42,8 +42,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
 
-  Publish-NPM:
-    needs: Release
+  PublishNPM:
+    needs: ReleaseGH
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -57,8 +57,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-  Publish-GitHub:
-    needs: Release
+  PublishGH:
+    needs: ReleaseGH
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
