@@ -16,7 +16,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v1
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
@@ -24,13 +24,6 @@ jobs:
         run: npm i
       - name: Build and test
         run: npm start validate
-      - name: Recache
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
 
   ReleaseGH:
     needs: Validate
@@ -45,11 +38,12 @@ jobs:
       - name: Recache
         uses: actions/cache@v1
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
       - name: Install
+        if: steps.Recache.outputs.cache-hit != 'true'
         run: npm i
       - name: Configure Git
         run: |
@@ -63,27 +57,28 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
 
-  # PublishNPM:
-  #   needs: ReleaseGH
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
-  #         registry-url: https://registry.npmjs.org/
-  #     - name: Cache
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-node-
-  #     - name: Install
-  #       run: npm i
-  #     - run: npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  PublishNPM:
+    needs: ReleaseGH
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: Recache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: Install
+        if: steps.Recache.outputs.cache-hit != 'true'
+        run: npm i
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
   PublishGH:
     needs: ReleaseGH
@@ -98,15 +93,17 @@ jobs:
       - name: Recache
         uses: actions/cache@v1
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
       - name: Install
+        if: steps.Recache.outputs.cache-hit != 'true'
         run: npm i
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}\nregistry=https://registry.npmjs.org/\n@hugosenari:registry=https://npm.pkg.github.com" >> ./.npmrc
+          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}\n\n@hugosenari:registry=https://npm.pkg.github.com" >> ./.npmrc
+          cat ./.npmrc
           npm publish
