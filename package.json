@@ -24,13 +24,13 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "all-contributors-cli": "^4.5.0",
+    "all-contributors-cli": "^6.11.2",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
-    "commitizen": "^2.9.6",
+    "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "12.0.2",
@@ -39,14 +39,14 @@
     "flow-bin": "^0.56.0",
     "flow-typed": "^2.2.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
+    "jest": "^25.0.0",
     "lint-staged": "^4.2.3",
     "nps": "^5.7.1",
     "nps-utils": "^1.4.0",
     "prettier": "^1.7.4",
     "remove-lockfiles": "^1.4.1",
-    "semantic-release-cli": "^5.2.3",
-    "semantic-release": "^15.13.31"
+    "semantic-release": "^15.13.31",
+    "semantic-release-cli": "^5.2.3"
   },
   "config": {
     "commitizen": {
