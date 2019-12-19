@@ -1,0 +1,6 @@
+npm:
+  publish: false
+git:
+  prequireCleanWorkingDir: false
+github:
+  release: false
