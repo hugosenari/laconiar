@@ -14,7 +14,6 @@
   },
   "scripts": {
     "start": "nps --no-scripts",
-    "precommit": "remove-lockfiles && lint-staged",
     "test": "nps test",
     "release": "release-it"
   },
@@ -67,5 +66,10 @@
   },
   "keywords": [
     "laconiajs, severless, ioc"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "remove-lockfiles && lint-staged"
+    }
+  }
 }
