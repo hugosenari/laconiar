@@ -104,6 +104,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}\n\n@hugosenari:registry=https://npm.pkg.github.com" >> ./.npmrc
+          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> ./.npmrc
+          echo "@hugosenari:registry=https://npm.pkg.github.com" >> ./.npmrc
           cat ./.npmrc
           npm publish
