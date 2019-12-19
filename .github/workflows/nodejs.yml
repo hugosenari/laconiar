@@ -27,9 +27,8 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
         restore-keys: |
           ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-    - name: npm install, build, and test
-      run: |
-        npm i
-        npm start validate
-      env:
-        CI: true
+    - name: Install
+      if: steps.Recache.outputs.cache-hit != 'true'
+      run: npm i
+    - name: Build and test
+      run: npm start validate
