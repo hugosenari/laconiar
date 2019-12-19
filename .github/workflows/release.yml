@@ -13,17 +13,24 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Install
-        run: npm i
-      - name: Build and test
-        run: npm start validate
       - name: Cache
         uses: actions/cache@v1
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: Install
+        run: npm i
+      - name: Build and test
+        run: npm start validate
+      - name: Recache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
 
   ReleaseGH:
     needs: Validate
@@ -35,13 +42,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Cache
+      - name: Recache
         uses: actions/cache@v1
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
       - name: Install
         run: npm i
       - name: Configure Git
@@ -88,13 +95,13 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@hugosenari'
-      - name: Cache
+      - name: Recache
         uses: actions/cache@v1
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
       - name: Install
         run: npm i
       - name: Publish
