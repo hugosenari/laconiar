@@ -1,4 +1,4 @@
-name: Release
+name: Git Release
 on:
   push:
     branches:
@@ -39,4 +39,4 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: master
+          branch: release
