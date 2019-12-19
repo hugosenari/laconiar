@@ -17,6 +17,13 @@ jobs:
         run: npm i
       - name: Build and test
         run: npm start validate
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
   ReleaseGH:
     needs: Validate
@@ -28,6 +35,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install
         run: npm i
       - name: Configure Git
@@ -51,6 +65,13 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install
         run: npm i
       - run: npm publish
@@ -67,6 +88,13 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@hugosenari'
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install
         run: npm i
       - name: Publish
