@@ -16,7 +16,7 @@
     "start": "nps --no-scripts",
     "precommit": "remove-lockfiles && lint-staged",
     "test": "nps test",
-    "semantic-release": "semantic-release"
+    "release": "release-it"
   },
   "main": "dist/index.js",
   "files": [
