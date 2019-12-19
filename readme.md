@@ -4,7 +4,6 @@
 
 [![npm](https://img.shields.io/npm/v/laconiar.svg?style=flat-square)](https://www.npmjs.com/package/laconiar)
 [![npm](https://img.shields.io/npm/dt/laconiar.svg?style=flat-square)](https://npm-stat.com/charts.html?package=laconiar&from=2016-04-01)
-[![Travis branch](https://img.shields.io/travis/hugosenari/laconiar/master.svg?style=flat-square)](https://travis-ci.org/hugosenari/laconiar)
 [![Codecov branch](https://img.shields.io/codecov/c/github/hugosenari/laconiar/master.svg?style=flat-square)](https://codecov.io/github/hugosenari/laconiar)
 <br />
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
@@ -18,7 +17,7 @@
 
 ## Installation
 
-```sh 
+```sh
 npm install --save laconiar
 ```
 
