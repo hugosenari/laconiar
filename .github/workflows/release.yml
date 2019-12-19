@@ -1,4 +1,4 @@
-name: Git Release
+name: Release
 on:
   push:
     branches:
