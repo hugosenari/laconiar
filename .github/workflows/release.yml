@@ -58,14 +58,6 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
           cat ./.npmrc
           npm run release -- patch --ci --no-git.push --no-git.requireUpstream
-      - name: Publish GitHub
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" > ./.npmrc
-          echo "@hugosenari:registry=https://npm.pkg.github.com" >> ./.npmrc
-          cat ./.npmrc
-          npm publish --scope @hugosenari
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
