@@ -14,4 +14,6 @@ export default function laconiar(defaults: Object = {}) {
   });
 }
 
-laconiar.factory = (defaults: Object = {}) => ({ R: laconiar(defaults)() });
+laconiar.factory = (defaults: Object = {}) => (...args: any) => ({
+  R: laconiar(defaults)(...args),
+});

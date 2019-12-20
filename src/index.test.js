@@ -15,8 +15,8 @@ describe('index.js', () => {
     expect(target.fs).toEqual(expected);
   });
 
-  it('shoudl return lacoinar factory', () => {
-    const { R: target } = laconiar.factory();
+  it('should return laconiar factory', () => {
+    const { R: target } = laconiar.factory()();
     const expected = require('fs');
     expect(target.fs).toEqual(expected);
   });
