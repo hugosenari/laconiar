@@ -1,4 +1,17 @@
 /* @flow */
-export default function laconiar(input: string) {
-  return input ? `👉 ${input} 👈` : 'No args passed! Relevant Change';
+/* eslint no-param-reassign: ["error", { "props": false }] */
+/* eslint import/no-dynamic-require: [0] */
+/* eslint global-require: [0] */
+
+export default function laconiar(defaults: Object = {}) {
+  return new Proxy(defaults, {
+    get(target, name: string) {
+      if (!target[name]) {
+        target[name] = require(name);
+      }
+      return target[name];
+    },
+  });
 }
+
+laconiar.factory = () => ({ R: laconiar() });
