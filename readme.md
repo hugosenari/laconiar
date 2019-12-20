@@ -13,7 +13,9 @@
 
 ## Why?
 
-// TODO
+Every time you use `require` you make it tightly coupled with required library. This isn't good for tests and SOLID principles.
+
+With this you can `require' things and inject/mock them when testing
 
 ## Installation
 
@@ -24,15 +26,51 @@ npm install --save laconiar
 ## Usage
 
 ```js
-import laconiar from 'laconiar';
+const laconia require('@laconia/core');
+const R = require('laconiar');
 
-laconiar('🐰');
-//=> '👉 🐰 👈'
+const app = (event, {
+  R: {
+    fs, // this same as const fs = require('fs');
+    fs: { createReadStream }, // this same as const { createReadStream } = require('fs');
+    'aws-sdk': awsSDK, // this is same as const awsSDK = require('aws-sdk');
+    './spam': err, // this will not work;
+    `${__dirname}/spam`: spam // this will work
+  }
+}) => {
+  // do something with required modules;
+  return createReadStream();
+};
+
+exports.handler = laconia(app).register(R.factory);
+
+// test app
+
+describe('testing app', () => {
+  it('mocking requirements', () => {
+    const createReadStream = jest.fn();
+    app(
+      R: {
+        fs: { createReadStream }
+      }
+    );
+    expect(createReadStream).toHaveBeenCalled();
+  });
+});
+
 ```
 
 ## FAQ
 
-// TODO
+### Should you use it?
+
+Good question, the main feature of [Laconia](https://laconiajs.io/) is to be a Micro [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) framework, some DI frameworks recommends to do not use it for things like require external library.
+
+My point is that you may use it for service creation.
+
+### How use it with [Tree shaking](https://en.wikipedia.org/wiki/Tree_shaking)?
+
+You couldn't, since your dependency are loaded dynamically. Isn't not impossible but not implemented yet.
 
 ## Related
 
