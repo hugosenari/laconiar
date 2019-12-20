@@ -81,7 +81,8 @@ You couldn't, since your dependency are loaded dynamically. Isn't not impossible
 
 ## Related
 
-// TODO
+* [laconia](/laconiajs/laconia/)
+* [laconiar](/hugosenari/laconiar/)
 
 ## Contributors
 
