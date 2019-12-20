@@ -3,7 +3,7 @@
 /* eslint import/no-dynamic-require: [0] */
 /* eslint global-require: [0] */
 
-export default function laconiar(defaults: Object = {}) {
+function factory(defaults: Object = {}) {
   return () => new Proxy(defaults, {
     get(target, name: string) {
       if (!target[name]) {
@@ -14,6 +14,11 @@ export default function laconiar(defaults: Object = {}) {
   });
 }
 
-laconiar.factory = (defaults: Object = {}) => (...args: any) => ({
-  R: laconiar(defaults)(...args),
-});
+export default function laconiar(defaults: Object = {}) {
+  const serviceFactory = factory(defaults);
+  const result = (...args: any) => ({
+    R: serviceFactory(...args),
+  });
+  result.factory = serviceFactory;
+  return result;
+}

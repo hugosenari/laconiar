@@ -26,10 +26,9 @@ npm install --save laconiar
 ## Usage
 
 ```js
-const laconia require('@laconia/core');
-const R = require('laconiar');
+// app.js
 
-const app = (event, {
+module.exports = (event, {
   R: {
     fs, // this same as const fs = require('fs');
     fs: { createReadStream }, // this same as const { createReadStream } = require('fs');
@@ -42,10 +41,18 @@ const app = (event, {
   return createReadStream();
 };
 
-exports.handler = laconia(app).register(R.factory());
 
-// test app
+// index.js
 
+const laconia require('@laconia/core');
+const R = require('laconiar');
+const app = require('./app');
+exports.handler = laconia(app).register(R());
+
+
+// app.test.js
+
+const app = require('./app');
 describe('testing app', () => {
   it('mocking requirements', () => {
     const createReadStream = jest.fn();
