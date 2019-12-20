@@ -4,7 +4,7 @@
 /* eslint global-require: [0] */
 
 export default function laconiar(defaults: Object = {}) {
-  return new Proxy(defaults, {
+  return () => new Proxy(defaults, {
     get(target, name: string) {
       if (!target[name]) {
         target[name] = require(name);
@@ -14,4 +14,4 @@ export default function laconiar(defaults: Object = {}) {
   });
 }
 
-laconiar.factory = () => ({ R: laconiar() });
+laconiar.factory = (defaults: Object = {}) => ({ R: laconiar(defaults)() });

@@ -3,14 +3,14 @@ import laconiar from './index';
 
 describe('index.js', () => {
   it('should require something', () => {
-    const target = laconiar();
+    const target = laconiar()();
     const expected = require('fs');
     expect(target.fs).toEqual(expected);
     expect(target.fs).toEqual(expected);
   });
   it('should use defaults', () => {
     const expected = 'spam';
-    const target = laconiar({ fs: expected });
+    const target = laconiar({ fs: expected })();
     expect(target.fs).toEqual(expected);
     expect(target.fs).toEqual(expected);
   });

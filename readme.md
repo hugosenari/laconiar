@@ -42,7 +42,7 @@ const app = (event, {
   return createReadStream();
 };
 
-exports.handler = laconia(app).register(R.factory);
+exports.handler = laconia(app).register(R.factory());
 
 // test app
 
