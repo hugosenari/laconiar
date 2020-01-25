@@ -21,4 +21,10 @@ describe('index.js', () => {
     const expected = require('fs');
     expect(target.fs).toEqual(expected);
   });
+
+  it('should return laconiar factory', () => {
+    const { R: target } = laconiar({}, `${__dirname}/`)();
+    const expected = laconiar;
+    expect(target.index).toEqual(expected);
+  });
 });
