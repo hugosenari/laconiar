@@ -49,6 +49,8 @@ jobs:
       - name: Install
         if: steps.Recache.outputs.cache-hit != 'true'
         run: npm i
+      - name: Build
+        run: npm
       - name: Configure Git
         run: |
           git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
